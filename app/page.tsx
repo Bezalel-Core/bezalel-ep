@@ -8,8 +8,6 @@ import LevelProgress from '@/components/LevelProgress'
 import StreakCard from '@/components/StreakCard'
 import HistoryList from '@/components/HistoryList'
 import RewardList from '@/components/RewardList'
-import GamerLogo from '@/components/GamerLogo'
-import { Confetti, useConfetti, PointsPopup } from '@/components/Animations'
 import {
   dailyTasks as initialDailyTasks,
   penalties,
@@ -18,15 +16,12 @@ import {
   initialProgress,
 } from '@/data/mock'
 import { Transaction, Task } from '@/types'
-import { Trophy, Gamepad2, History, Gift, Zap } from 'lucide-react'
+import { Trophy, Gamepad2, History, Gift, Home as HomeIcon } from 'lucide-react'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('dashboard')
   const [dailyTasks, setDailyTasks] = useState<Task[]>(initialDailyTasks)
   const [progress, setProgress] = useState(initialProgress)
-  const { triggerConfetti, confettiPieces, isActive } = useConfetti()
-  const [showPointsPopup, setShowPointsPopup] = useState(false)
-  const [lastPoints, setLastPoints] = useState(0)
 
   const handleTaskComplete = (taskId: string) => {
     const task = dailyTasks.find((t) => t.id === taskId)
@@ -51,13 +46,6 @@ export default function Home() {
       currentPoints: prev.currentPoints + task.points,
       transactions: [newTransaction, ...prev.transactions],
     }))
-
-    // Trigger animations
-    setLastPoints(task.points)
-    setShowPointsPopup(true)
-    triggerConfetti()
-    
-    setTimeout(() => setShowPointsPopup(false), 1200)
   }
 
   const handlePenaltyApply = (penaltyId: string) => {
@@ -83,63 +71,27 @@ export default function Home() {
     switch (activeTab) {
       case 'dashboard':
         return (
-          <>
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <GamerLogo size="md" />
-              <div className="text-center">
-                <h1 className="text-3xl font-display text-white tracking-wider">
-                  Bezalel
-                </h1>
-                <p className="text-sm text-cyan-400 font-bold tracking-widest">
-                  EVOLUTION POINTS
-                </p>
-              </div>
-            </div>
-            
+          <div className="space-y-4">
             <DashboardCard progress={progress} />
             <TaskList
               tasks={dailyTasks}
               onComplete={handleTaskComplete}
-              title="📋 Tarefas de Hoje"
-              color="text-cyan-400"
+              title="Tarefas de Hoje"
             />
             <PenaltyList penalties={penalties} onApply={handlePenaltyApply} />
-          </>
+          </div>
         )
       case 'levels':
         return (
-          <>
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Trophy className="w-10 h-10 text-yellow-400" />
-              <h1 className="text-3xl font-display text-white tracking-wider">Níveis</h1>
-            </div>
-            
+          <div className="space-y-4">
             <LevelProgress levels={levels} currentPoints={progress.currentPoints} />
             <StreakCard streakDays={progress.streakDays} />
-          </>
+          </div>
         )
       case 'rewards':
-        return (
-          <>
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Gift className="w-10 h-10 text-pink-400" />
-              <h1 className="text-3xl font-display text-white tracking-wider">Recompensas</h1>
-            </div>
-            
-            <RewardList rewards={rewards} currentPoints={progress.currentPoints} />
-          </>
-        )
+        return <RewardList rewards={rewards} currentPoints={progress.currentPoints} />
       case 'history':
-        return (
-          <>
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <History className="w-10 h-10 text-purple-400" />
-              <h1 className="text-3xl font-display text-white tracking-wider">Histórico</h1>
-            </div>
-            
-            <HistoryList transactions={progress.transactions} />
-          </>
-        )
+        return <HistoryList transactions={progress.transactions} />
       default:
         return null
     }
@@ -147,64 +99,80 @@ export default function Home() {
 
   return (
     <div className="min-h-screen pb-24">
-      {isActive && <Confetti pieces={confettiPieces} />}
-      <PointsPopup points={lastPoints} show={showPointsPopup} />
-      
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-md mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center font-black text-white text-sm glow-orange">
+                EP
+              </div>
+              <div>
+                <h1 className="text-white font-bold text-lg">Bezalel</h1>
+                <p className="text-xs text-gray-400">Evolution Points</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
       <div className="max-w-md mx-auto p-4">
         {renderContent()}
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-gray-900/90 backdrop-blur-lg border-t border-white/10 px-4 py-2">
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-[#0a0a0f]/90 backdrop-blur-xl border-t border-white/5 px-2 py-3">
         <div className="max-w-md mx-auto flex justify-around">
-          <button
+          <NavButton
+            active={activeTab === 'dashboard'}
             onClick={() => setActiveTab('dashboard')}
-            className={`flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${
-              activeTab === 'dashboard' 
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30' 
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Gamepad2 className="w-6 h-6" />
-            <span className="text-xs mt-1 font-bold">Tarefas</span>
-          </button>
-
-          <button
+            icon={<HomeIcon className="w-5 h-5" />}
+            label="Início"
+          />
+          <NavButton
+            active={activeTab === 'levels'}
             onClick={() => setActiveTab('levels')}
-            className={`flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${
-              activeTab === 'levels' 
-                ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-lg shadow-yellow-500/30' 
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Trophy className="w-6 h-6" />
-            <span className="text-xs mt-1 font-bold">Níveis</span>
-          </button>
-
-          <button
+            icon={<Trophy className="w-5 h-5" />}
+            label="Níveis"
+          />
+          <NavButton
+            active={activeTab === 'rewards'}
             onClick={() => setActiveTab('rewards')}
-            className={`flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${
-              activeTab === 'rewards' 
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-pink-500/30' 
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Gift className="w-6 h-6" />
-            <span className="text-xs mt-1 font-bold">Recompensas</span>
-          </button>
-
-          <button
+            icon={<Gift className="w-5 h-5" />}
+            label="Prêmios"
+          />
+          <NavButton
+            active={activeTab === 'history'}
             onClick={() => setActiveTab('history')}
-            className={`flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${
-              activeTab === 'history' 
-                ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg shadow-purple-500/30' 
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <History className="w-6 h-6" />
-            <span className="text-xs mt-1 font-bold">Histórico</span>
-          </button>
+            icon={<History className="w-5 h-5" />}
+            label="Histórico"
+          />
         </div>
       </nav>
     </div>
+  )
+}
+
+interface NavButtonProps {
+  active: boolean
+  onClick: () => void
+  icon: React.ReactNode
+  label: string
+}
+
+function NavButton({ active, onClick, icon, label }: NavButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex flex-col items-center p-2 rounded-xl transition-all ${
+        active 
+          ? 'text-orange-500' 
+          : 'text-gray-500 hover:text-gray-300'
+      }`}
+    >
+      {icon}
+      <span className="text-[10px] mt-1 font-medium">{label}</span>
+    </button>
   )
 }
