@@ -30,7 +30,7 @@ export default function HistoryList({ transactions }: HistoryListProps) {
     <div className="gamer-card p-5 mb-4 animate-slide-up">
       <div className="flex items-center gap-3 mb-5">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center"
-003e
+          style={{ boxShadow: '0 0 20px rgba(99, 102, 241, 0.4)' }}>
           <History className="w-5 h-5 text-white" />
         </div>
         <h2 className="text-xl font-display text-white tracking-wide">📜 Histórico de Pontos</h2>
@@ -39,8 +39,7 @@ export default function HistoryList({ transactions }: HistoryListProps) {
       {/* Resumo */}
       {transactions.length > 0 && (
         <div className="grid grid-cols-2 gap-3 mb-5">
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30"
-          >
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
             <div className="flex items-center gap-2 mb-1">
               <TrendingUp className="w-4 h-4 text-green-400" />
               <span className="text-xs text-green-400 font-bold">GANHOS</span>
@@ -48,8 +47,7 @@ export default function HistoryList({ transactions }: HistoryListProps) {
             <p className="text-2xl font-black text-green-400">+{totalEarned}</p>
           </div>
           
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30"
-          >
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30">
             <div className="flex items-center gap-2 mb-1">
               <TrendingDown className="w-4 h-4 text-red-400" />
               <span className="text-xs text-red-400 font-bold">PERDIDOS</span>
@@ -62,8 +60,7 @@ export default function HistoryList({ transactions }: HistoryListProps) {
       <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
         {transactions.length === 0 ? (
           <div className="text-center py-10">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center"
-            >
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
               <Clock className="w-8 h-8 text-gray-600" />
             </div>
             <p className="text-gray-500 font-medium">Nenhuma atividade ainda</p>
@@ -101,8 +98,7 @@ export default function HistoryList({ transactions }: HistoryListProps) {
                 </div>
                 <div>
                   <p className="font-bold text-white">{transaction.title}</p>
-                  <p className="text-xs text-gray-500 flex items-center gap-1"
-003e
+                  <p className="text-xs text-gray-500 flex items-center gap-1">
                     <Clock className="w-3 h-3" />
                     {formatDate(transaction.date)} às {formatTime(transaction.date)}
                   </p>

@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '🎮 Kauan Rewards',
-  description: 'Sistema de recompensas e gamificação épico!',
+  title: 'Bezalel EP 🎮',
+  description: 'Bezalel Evolution Points - Sistema de recompensas e gamificação épico!',
   manifest: '/manifest.json',
 }
 

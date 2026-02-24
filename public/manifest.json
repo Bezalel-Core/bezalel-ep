@@ -1,11 +1,11 @@
 {
-  "name": "Kauan Rewards",
-  "short_name": "Kauan Rewards",
-  "description": "Sistema de recompensas e gamificação",
+  "name": "Bezalel EP",
+  "short_name": "Bezalel EP",
+  "description": "Bezalel Evolution Points - Sistema de recompensas e gamificação",
   "start_url": "/",
   "display": "standalone",
-  "background_color":="#ffffff",
-  "theme_color":"#6366f1",
+  "background_color": "#0a0a1a",
+  "theme_color": "#9d00ff",
   "orientation": "portrait",
   "icons": [
     {

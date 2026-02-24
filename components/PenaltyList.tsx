@@ -29,7 +29,7 @@ export default function PenaltyList({ penalties, onApply }: PenaltyListProps) {
           <AlertTriangle className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-display text-white tracking-wide">⚠️ Penalidades</h2>
+          <h2 className="text-xl font-display text-white tracking-wide">Penalidades</h2>
           <p className="text-sm text-gray-400">Cuidado! Clique para registrar</p>
         </div>
       </div>
@@ -63,8 +63,7 @@ export default function PenaltyList({ penalties, onApply }: PenaltyListProps) {
             </p>
             
             <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="flex items-center gap-1 text-xs text-red-400"
-003e
+              <div className="flex items-center gap-1 text-xs text-red-400">
                 <Zap className="w-3 h-3" />
                 <span>Clique para aplicar</span>
               </div>
@@ -73,11 +72,10 @@ export default function PenaltyList({ penalties, onApply }: PenaltyListProps) {
         ))}
       </div>
 
-      <div className="mt-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3"
-003e
+      <div className="mt-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3">
         <Skull className="w-5 h-5 text-red-400" />
         <p className="text-xs text-gray-400">
-          Penalidades reduzem seus pontos! Fique atento às regras.
+          Penalidades reduzem seus pontos! Fique atento as regras.
         </p>
       </div>
     </div>
